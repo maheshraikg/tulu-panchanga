@@ -11,7 +11,7 @@ Everything is computed on the phone; there is no network access.
 <img src="docs/screenshots/en_1c_festival_sheet.png" width="200">
 </p>
 
-**Download:** [tulu-panchanga.apk](https://github.com/maheshraikg/Pdf_Tools/releases/download/tulu-panchanga-latest/tulu-panchanga.apk)
+**Download:** [tulu-panchanga.apk](https://github.com/maheshraikg/tulu-panchanga/releases/download/tulu-panchanga-latest/tulu-panchanga.apk)
 (latest build from CI, debug-signed).
 
 ## Features
