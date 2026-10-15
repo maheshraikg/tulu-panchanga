@@ -1,4 +1,4 @@
-package com.maheshraikg.tulupanchanga
+package com.tulupanchanga.app
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,4 +1,4 @@
-package com.maheshraikg.tulupanchanga
+package com.tulupanchanga.app
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager

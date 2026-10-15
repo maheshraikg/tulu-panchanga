@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.maheshraikg.tulupanchanga"
+    namespace = "com.tulupanchanga.app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -19,7 +19,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.maheshraikg.tulupanchanga"
+        applicationId = "com.tulupanchanga.app"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         // Uses the version code from pubspec.yaml. When using split APKs, 1000 * ABI_VERSION

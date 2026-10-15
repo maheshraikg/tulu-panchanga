@@ -159,7 +159,7 @@ docs/                 VERIFY.md, CSVs, screenshots
 
 ## Google Play
 
-- App ID: `com.maheshraikg.tulupanchanga`
+- App ID: `com.tulupanchanga.app`
 - Each build attaches `tulu-panchanga.aab` (upload to Play) and
   `tulu-panchanga.apk` (install directly) to the `tulu-panchanga-latest` release.
 - Store listing text, data-safety answers and graphics: `docs/play/listing.md`.

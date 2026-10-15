@@ -5,7 +5,7 @@ Limits: app name 30, short description 80, full description 4000 characters.
 
 | Field | Value |
 |---|---|
-| App ID (package) | `com.maheshraikg.tulupanchanga` |
+| App ID (package) | `com.tulupanchanga.app` |
 | Category | Books & Reference (alternative: Lifestyle) |
 | Tags | Calendar, Religion, Reference |
 | Contains ads | No |

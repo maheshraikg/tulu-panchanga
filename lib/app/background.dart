@@ -27,7 +27,7 @@ const int kNotifyDays = 14;
 const int kWidgetDays = 31;
 
 const String kWidgetProvider =
-    'com.maheshraikg.tulupanchanga.TodayWidgetProvider';
+    'com.tulupanchanga.app.TodayWidgetProvider';
 
 class Background {
   static final _plugin = FlutterLocalNotificationsPlugin();
