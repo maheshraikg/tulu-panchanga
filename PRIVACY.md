@@ -59,4 +59,4 @@ with a new date.
 
 Questions: open an issue at
 <https://github.com/maheshraikg/tulu-panchanga/issues> or email
-SUPPORT_EMAIL.
+maheshraikg@gmail.com.

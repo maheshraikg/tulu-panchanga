@@ -12,6 +12,8 @@ Limits: app name 30, short description 80, full description 4000 characters.
 | In-app purchases | No |
 | Content rating | Everyone (answer "No" to every IARC question) |
 | Target audience | 13+ (it is suitable for all ages; 13+ avoids the Families programme paperwork) |
+| Support email | maheshraikg@gmail.com |
+| Website (optional) | https://github.com/maheshraikg/tulu-panchanga |
 | Privacy policy URL | https://github.com/maheshraikg/tulu-panchanga/blob/main/PRIVACY.md |
 | App icon (512×512) | `docs/icon_512.png` |
 | Feature graphic (1024×500) | `docs/play/feature_graphic.png` |
