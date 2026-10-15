@@ -82,11 +82,11 @@ jobs:
           } > android/key.properties
 
       - name: Build release APK
-        run: flutter build apk --release --build-number=${{ github.run_number }}
+        run: flutter build apk --release --build-number=${{ github.run_number }} --dart-define=BUILD_NUMBER=${{ github.run_number }}
 
       # Android App Bundle for Google Play (Play delivers ~20 MB per phone).
       - name: Build Play app bundle
-        run: flutter build appbundle --release --build-number=${{ github.run_number }}
+        run: flutter build appbundle --release --build-number=${{ github.run_number }} --dart-define=BUILD_NUMBER=${{ github.run_number }}
 
       - name: APK size
         run: |

@@ -68,6 +68,9 @@ void main() {
     await tester.tap(find.byIcon(Icons.settings_outlined).last);
     await tester.pump();
     expect(find.text('Language'), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('Report a problem'), 300);
+    expect(find.text('Send a suggestion'), findsOneWidget);
+    expect(find.text('Report a problem'), findsOneWidget);
   });
 
   testWidgets('Tulu language with lipi toggle renders Tulu-Tigalari', (

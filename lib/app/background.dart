@@ -26,8 +26,7 @@ const int kNotifyDays = 14;
 /// Days of widget data stored ahead.
 const int kWidgetDays = 31;
 
-const String kWidgetProvider =
-    'com.tulupanchanga.app.TodayWidgetProvider';
+const String kWidgetProvider = 'com.tulupanchanga.app.TodayWidgetProvider';
 
 class Background {
   static final _plugin = FlutterLocalNotificationsPlugin();

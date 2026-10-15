@@ -66,6 +66,11 @@
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
         </intent>
+        <!-- Lets "Send a suggestion" / "Report a problem" open an email app. -->
+        <intent>
+            <action android:name="android.intent.action.SENDTO"/>
+            <data android:scheme="mailto"/>
+        </intent>
         <!-- Lets the app find the on-device text-to-speech engine. -->
         <intent>
             <action android:name="android.intent.action.TTS_SERVICE"/>

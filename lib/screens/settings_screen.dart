@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app/background.dart';
+import '../app/feedback.dart';
 import '../app/scope.dart';
 import 'language_picker.dart';
 import '../panchanga/names.dart';
@@ -163,6 +164,19 @@ class SettingsScreen extends StatelessWidget {
               onSelectionChanged: (v) =>
                   settings.update((x) => x.themeMode = v.first),
             ),
+          ),
+          header(s.feedback),
+          ListTile(
+            leading: const Icon(Icons.lightbulb_outline_rounded),
+            title: LipiText(s.sendSuggestion),
+            subtitle: const Text(kSupportEmail),
+            onTap: () => sendFeedback(context, FeedbackKind.suggestion),
+          ),
+          ListTile(
+            leading: const Icon(Icons.bug_report_outlined),
+            title: LipiText(s.reportProblem),
+            subtitle: LipiText(s.feedbackHint),
+            onTap: () => sendFeedback(context, FeedbackKind.bug),
           ),
           header(s.about),
           Padding(
