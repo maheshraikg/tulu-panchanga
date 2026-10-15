@@ -84,6 +84,10 @@ jobs:
       - name: Build release APK
         run: flutter build apk --release --build-number=${{ github.run_number }}
 
+      # Android App Bundle for Google Play (Play delivers ~20 MB per phone).
+      - name: Build Play app bundle
+        run: flutter build appbundle --release --build-number=${{ github.run_number }}
+
       - name: APK size
         run: |
           ls -l build/app/outputs/flutter-apk/app-release.apk
@@ -94,6 +98,12 @@ jobs:
         with:
           name: tulu-panchanga-release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Upload Play app bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: tulu-panchanga-play-aab
+          path: build/app/outputs/bundle/release/app-release.aab
 
       - name: Upload CSVs
         uses: actions/upload-artifact@v4
@@ -110,8 +120,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           cp build/app/outputs/flutter-apk/app-release.apk build/tulu-panchanga.apk
+          cp build/app/outputs/bundle/release/app-release.aab build/tulu-panchanga.aab
           gh release delete tulu-panchanga-latest --yes --cleanup-tag || true
-          gh release create tulu-panchanga-latest build/tulu-panchanga.apk \
+          gh release create tulu-panchanga-latest build/tulu-panchanga.apk build/tulu-panchanga.aab \
             --target "${{ github.sha }}" --latest \
             --title "Tulu Panchanga (latest build)" \
-            --notes "Release APK built from ${{ github.sha }} (build ${{ github.run_number }}). Direct link: https://github.com/${{ github.repository }}/releases/download/tulu-panchanga-latest/tulu-panchanga.apk"
+            --notes "Release APK built from ${{ github.sha }} (build ${{ github.run_number }}). APK (install directly): https://github.com/${{ github.repository }}/releases/download/tulu-panchanga-latest/tulu-panchanga.apk — AAB (upload to Google Play): tulu-panchanga.aab"

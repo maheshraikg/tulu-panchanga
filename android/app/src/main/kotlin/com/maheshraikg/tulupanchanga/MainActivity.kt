@@ -1,4 +1,4 @@
-package com.kspstadk.tulu_panchanga
+package com.maheshraikg.tulupanchanga
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -157,6 +157,14 @@ docs/                 VERIFY.md, CSVs, screenshots
 - iOS build (widget via WidgetKit, notifications).
 - Tulu-language audio for the daily panchanga.
 
+## Google Play
+
+- App ID: `com.maheshraikg.tulupanchanga`
+- Each build attaches `tulu-panchanga.aab` (upload to Play) and
+  `tulu-panchanga.apk` (install directly) to the `tulu-panchanga-latest` release.
+- Store listing text, data-safety answers and graphics: `docs/play/listing.md`.
+- Privacy policy: [`PRIVACY.md`](PRIVACY.md).
+
 ## Licences
 
 Code: as the repository. Tulu-Tigalari font: Mallige v1.4, SIL OFL 1.1
