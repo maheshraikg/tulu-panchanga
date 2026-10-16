@@ -9,6 +9,12 @@ on:
 permissions:
   contents: write
 
+# One build at a time per branch, so two builds never replace the
+# tulu-panchanga-latest release at the same moment.
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   build:
     name: Analyze, test and build release APK
