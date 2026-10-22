@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Behind the adaptive launcher icon (matches the icon's red). -->
+    <color name="ic_launcher_background">#AF0306</color>
+</resources>

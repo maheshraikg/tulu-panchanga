@@ -1,32 +1,51 @@
-"""Draws the launcher icon (sunrise over the horizon, Tulunadu red/yellow)
-into android/app/src/main/res/mipmap-*/ic_launcher.png.  pip install pillow"""
-import math
-from PIL import Image, ImageDraw
+"""Builds every app icon from docs/branding/icon_source.png (the artwork:
+lamp, calendar and sun on Tulu red).
 
-RED, GOLD, CREAM = (179, 38, 30), (242, 201, 76), (255, 248, 230)
-SIZES = {'mdpi': 48, 'hdpi': 72, 'xhdpi': 96, 'xxhdpi': 144, 'xxxhdpi': 192}
+Writes:
+  docs/icon_512.png                                   Google Play icon
+  android/app/src/main/res/mipmap-*/ic_launcher.png   legacy launcher icon
+  android/app/src/main/res/mipmap-*/ic_launcher_foreground.png
+                                                      adaptive icon layer
+Usage: python tool/gen_icon.py <repo root>    (pip install pillow)
+"""
+import sys
+from PIL import Image, ImageDraw, ImageFilter
 
-
-def draw(n):
-    s = 4 * n  # supersample
-    im = Image.new('RGBA', (s, s), (0, 0, 0, 0))
-    d = ImageDraw.Draw(im)
-    d.rounded_rectangle([0, 0, s - 1, s - 1], radius=s * 0.22, fill=RED)
-    cx, hy, r = s / 2, s * 0.64, s * 0.24
-    for i in range(12):  # rays
-        a = math.pi + i * math.pi / 11
-        x1, y1 = cx + math.cos(a) * r * 1.25, hy + math.sin(a) * r * 1.25
-        x2, y2 = cx + math.cos(a) * r * 1.6, hy + math.sin(a) * r * 1.6
-        d.line([x1, y1, x2, y2], fill=GOLD, width=int(s * 0.035))
-    d.pieslice([cx - r, hy - r, cx + r, hy + r], 180, 360, fill=GOLD)
-    d.rectangle([s * 0.14, hy, s * 0.86, hy + s * 0.04], fill=CREAM)
-    for k, w in ((0.1, 0.5), (0.18, 0.3)):  # water lines
-        y = hy + s * k
-        d.rectangle([cx - s * w / 2, y, cx + s * w / 2, y + s * 0.025],
-                    fill=CREAM)
-    return im.resize((n, n), Image.LANCZOS)
+root = sys.argv[1]
+art = Image.open(f'{root}/docs/branding/icon_source.png').convert('RGB')
+RES = f'{root}/android/app/src/main/res'
+LEGACY = {'mdpi': 48, 'hdpi': 72, 'xhdpi': 96, 'xxhdpi': 144, 'xxxhdpi': 192}
 
 
-for name, n in SIZES.items():
-    draw(n).save(f'android/app/src/main/res/mipmap-{name}/ic_launcher.png')
-draw(512).save('docs/icon_512.png')
+def padded(n, scale):
+    """[art] shrunk to [scale] of an n×n square; the margin is a blurred,
+    enlarged copy of the art so the red glow continues to the edges."""
+    bg = art.resize((n, n), Image.LANCZOS).filter(
+        ImageFilter.GaussianBlur(n / 12))
+    k = round(n * scale)
+    off = (n - k) // 2
+    feather = Image.new('L', (k, k), 0)
+    ImageDraw.Draw(feather).rounded_rectangle(
+        [0, 0, k - 1, k - 1], radius=k // 6, fill=255)
+    feather = feather.filter(ImageFilter.GaussianBlur(k / 40))
+    bg.paste(art.resize((k, k), Image.LANCZOS), (off, off), feather)
+    return bg
+
+
+# Google Play: full artwork; Play applies its own rounded mask.
+art.resize((512, 512), Image.LANCZOS).save(f'{root}/docs/icon_512.png')
+
+for dpi, n in LEGACY.items():
+    # Legacy (pre-Android 8) icon: rounded square, art slightly inset.
+    im = padded(n * 4, 0.92).convert('RGBA')
+    mask = Image.new('L', im.size, 0)
+    ImageDraw.Draw(mask).rounded_rectangle(
+        [0, 0, im.width - 1, im.height - 1], radius=im.width * 0.22, fill=255)
+    im.putalpha(mask)
+    im.resize((n, n), Image.LANCZOS).save(f'{RES}/mipmap-{dpi}/ic_launcher.png')
+    # Adaptive foreground: 108dp canvas; launchers show the middle 72dp
+    # and may cut it to a circle, so the whole art fits inside that circle.
+    fg = padded(n * 108 // 48 * 4, 0.62)
+    fg.resize((n * 108 // 48,) * 2, Image.LANCZOS).save(
+        f'{RES}/mipmap-{dpi}/ic_launcher_foreground.png')
+print('icons written')
