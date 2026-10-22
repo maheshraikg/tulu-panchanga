@@ -17,7 +17,7 @@ Limits: app name 30, short description 80, full description 4000 characters.
 | Privacy policy URL | https://github.com/maheshraikg/tulu-panchanga/blob/main/PRIVACY.md |
 | App icon (512×512) | `docs/icon_512.png` |
 | Feature graphic (1024×500) | `docs/play/feature_graphic.png` |
-| Phone screenshots | `docs/screenshots/kn_1_today.png`, `kn_2_calendar.png`, `kn_3_festivals.png`, `kn_4_muhurta.png`, `kn_0b_language_sheet.png`, `en_1_today.png`, `tcy_7_today_lipi.png`, `art_gallery.png` |
+| Phone screenshots (1080×1920) | all 6 files in `docs/play/screenshots/`, in order 1–6 |
 
 ## Data safety form
 
