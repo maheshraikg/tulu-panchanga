@@ -179,6 +179,12 @@ class SettingsScreen extends StatelessWidget {
             onTap: () => sendFeedback(context, FeedbackKind.bug),
           ),
           ListTile(
+            leading: const Icon(Icons.chat_outlined, color: Color(0xFF25D366)),
+            title: LipiText(s.chatWhatsApp),
+            subtitle: const Text(kWhatsAppDisplay),
+            onTap: () => openWhatsApp(context),
+          ),
+          ListTile(
             leading: const Icon(Icons.privacy_tip_outlined),
             title: LipiText(s.privacyPolicy),
             subtitle: LipiText(s.privacySummary),

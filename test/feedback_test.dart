@@ -18,4 +18,11 @@ void main() {
     expect(a.toString(), contains('Suggestion'));
     expect(b.toString(), contains('Problem%20report'));
   });
+
+  test('WhatsApp link opens a chat with the developer', () {
+    final uri = whatsAppUri(details: 'Place: Udupi');
+    expect(uri.host, 'wa.me');
+    expect(uri.path, '/$kWhatsAppNumber');
+    expect(uri.queryParameters['text'], contains('Place: Udupi'));
+  });
 }
