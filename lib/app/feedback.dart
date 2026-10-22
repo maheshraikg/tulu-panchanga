@@ -7,6 +7,10 @@ import 'scope.dart';
 /// Where suggestions and bug reports go.
 const String kSupportEmail = 'maheshraikg@gmail.com';
 
+/// Shown on Google Play and linked from Settings.
+const String kPrivacyPolicyUrl =
+    'https://github.com/maheshraikg/tulu-panchanga/blob/main/PRIVACY.md';
+
 /// CI passes the run number with --dart-define=BUILD_NUMBER=…
 const String kBuildNumber = String.fromEnvironment(
   'BUILD_NUMBER',
@@ -64,3 +68,20 @@ Future<void> sendFeedback(BuildContext context, FeedbackKind kind) async {
 }
 
 String _two(int n) => n.toString().padLeft(2, '0');
+
+/// Opens the privacy policy in the browser; if that fails, copies the link.
+Future<void> openPrivacyPolicy(BuildContext context) async {
+  final s = context.s, messenger = ScaffoldMessenger.of(context);
+  var opened = false;
+  try {
+    opened = await launchUrl(
+      Uri.parse(kPrivacyPolicyUrl),
+      mode: LaunchMode.externalApplication,
+    );
+  } catch (_) {}
+  if (opened) return;
+  await Clipboard.setData(const ClipboardData(text: kPrivacyPolicyUrl));
+  messenger.showSnackBar(
+    SnackBar(content: Text('${s.linkCopied} $kPrivacyPolicyUrl')),
+  );
+}

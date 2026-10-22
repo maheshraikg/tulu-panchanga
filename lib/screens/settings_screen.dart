@@ -178,6 +178,12 @@ class SettingsScreen extends StatelessWidget {
             subtitle: LipiText(s.feedbackHint),
             onTap: () => sendFeedback(context, FeedbackKind.bug),
           ),
+          ListTile(
+            leading: const Icon(Icons.privacy_tip_outlined),
+            title: LipiText(s.privacyPolicy),
+            subtitle: LipiText(s.privacySummary),
+            onTap: () => openPrivacyPolicy(context),
+          ),
           header(s.about),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),

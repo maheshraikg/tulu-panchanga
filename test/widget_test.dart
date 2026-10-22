@@ -71,6 +71,8 @@ void main() {
     await tester.scrollUntilVisible(find.text('Report a problem'), 300);
     expect(find.text('Send a suggestion'), findsOneWidget);
     expect(find.text('Report a problem'), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('Privacy policy'), 300);
+    expect(find.text('Privacy policy'), findsOneWidget);
   });
 
   testWidgets('Tulu language with lipi toggle renders Tulu-Tigalari', (
