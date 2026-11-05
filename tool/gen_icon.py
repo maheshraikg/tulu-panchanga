@@ -6,8 +6,14 @@ Writes:
   android/app/src/main/res/mipmap-*/ic_launcher.png   legacy launcher icon
   android/app/src/main/res/mipmap-*/ic_launcher_foreground.png
                                                       adaptive icon layer
+  android/app/src/main/res/drawable-*/launch_icon.png  plain bitmap for the
+                                                      launch screen
+  android/app/src/main/res/drawable-*/ic_stat_panchanga.png
+                                                      white notification icon
 Usage: python tool/gen_icon.py <repo root>    (pip install pillow)
 """
+import math
+import os
 import sys
 from PIL import Image, ImageDraw, ImageFilter
 
@@ -48,4 +54,43 @@ for dpi, n in LEGACY.items():
     fg = padded(n * 108 // 48 * 4, 0.62)
     fg.resize((n * 108 // 48,) * 2, Image.LANCZOS).save(
         f'{RES}/mipmap-{dpi}/ic_launcher_foreground.png')
+
+
+# Launch screen: launch_background.xml needs a plain PNG. It must NOT point
+# at @mipmap/ic_launcher, which is an adaptive-icon XML on Android 8+;
+# a <bitmap> of it throws Resources$NotFoundException and the app crashes
+# before it opens (the Google Play rejection of build 13).
+for dpi, n in LEGACY.items():
+    k = n * 2  # 96dp
+    im = padded(k * 4, 0.92).convert('RGBA')
+    mask = Image.new('L', im.size, 0)
+    ImageDraw.Draw(mask).rounded_rectangle(
+        [0, 0, im.width - 1, im.height - 1], radius=im.width * 0.22, fill=255)
+    im.putalpha(mask)
+    os.makedirs(f'{RES}/drawable-{dpi}', exist_ok=True)
+    im.resize((k, k), Image.LANCZOS).save(f'{RES}/drawable-{dpi}/launch_icon.png')
+
+
+def stat_icon(n):
+    """White-on-transparent rising sun over a calendar edge, as Android
+    requires for the small notification icon."""
+    s = n * 8
+    im = Image.new('L', (s, s), 0)
+    d = ImageDraw.Draw(im)
+    cx, cy, r = s / 2, s * 0.62, s * 0.2
+    for i in range(9):
+        a = math.pi + i * math.pi / 8
+        d.line([cx + math.cos(a) * r * 1.35, cy + math.sin(a) * r * 1.35,
+                cx + math.cos(a) * r * 1.85, cy + math.sin(a) * r * 1.85],
+               fill=255, width=round(s * 0.07))
+    d.pieslice([cx - r, cy - r, cx + r, cy + r], 180, 360, fill=255)
+    d.rounded_rectangle([s * 0.1, cy + s * 0.06, s * 0.9, cy + s * 0.15],
+                        radius=s * 0.04, fill=255)
+    out = Image.new('RGBA', (s, s), (255, 255, 255, 0))
+    out.putalpha(im)
+    return out.resize((n, n), Image.LANCZOS)
+
+
+for dpi, n in LEGACY.items():
+    stat_icon(n // 2).save(f'{RES}/drawable-{dpi}/ic_stat_panchanga.png')  # 24dp
 print('icons written')
